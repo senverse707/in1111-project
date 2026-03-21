@@ -23,5 +23,6 @@ void searchLostItem(void);
 void deleteLostItem(void);
 void updateLostItem(void);
 void sortLostItems(void);
+void displayLostItemMenu();
 
 #endif

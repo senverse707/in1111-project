@@ -11,5 +11,6 @@ void addCategory(void);
 void updateCategory(void);
 void searchCategory(void);
 void displayCategories(void);
+void displayCategoryMenu();
 
 #endif

@@ -23,5 +23,6 @@ void displayForward(void);
 void displayBackward(void);
 void searchItem(void);
 void deleteItem(void);
+void displayFoundItemMenu();
 
 #endif

@@ -34,5 +34,6 @@ void displaycase(struct ResolvedNode *temp);
 struct ResolvedNode *search(struct ResolvedList *list, int CaseID);
 void update(struct ResolvedList *list, int CaseID, char NewRemarks[]);
 void deletecase(struct ResolvedList *list, int CaseID);
+void displayResolvedCasesMenu();
 
 #endif
