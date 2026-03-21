@@ -102,22 +102,26 @@ void deleteItem() {
     printf("Item not found\n");
 }
 
-// Main
-int main() {
+void displayFoundItemMenu(){
     int choice;
-
-    do {
-        printf("\n1.Insert\n2.Delete\n3.Search\n4.Display Forward\n5.Display Backward\n0.Exit\nChoice: ");
+    do{
+        printf("\n===== Found Item Management Menu =====\n");
+        printf("1. Insert Item\n");
+        printf("2. Delete Item\n");
+        printf("3. Search Item\n");
+        printf("4. Display Forward\n");
+        printf("5. Display Backward\n");
+        printf("0. Exit\n");
+        printf("Enter your choice: ");
         scanf("%d", &choice);
-
-        switch (choice) {
+        switch(choice){
             case 1: insertItem(); break;
             case 2: deleteItem(); break;
             case 3: searchItem(); break;
             case 4: displayForward(); break;
             case 5: displayBackward(); break;
+            case 0: printf("Exiting program...\n"); break;
+            default: printf("Invalid choice. Try again.\n");
         }
     } while (choice != 0);
-
-    return 0;
 }

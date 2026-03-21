@@ -157,16 +157,7 @@ void loadSampleData(void)
     printf("  [OK] 5 sample actions loaded.\n");
 }
 
-/* ── main menu ───────────────────────────── */
-int main(void)
-{
-    printf("\n");
-    printLine(50);
-    printf("   MODULE 5 - STACK (Linked List)\n");
-    printLine(50);
-    printf("  Loading sample data...\n");
-    loadSampleData();
-
+void displayAtionsMenu(){
     int ch;
     do
     {
@@ -207,6 +198,5 @@ int main(void)
             printf("  [Error] Invalid option.\n");
         }
     } while (ch != 0);
-
-    return 0;
 }
+

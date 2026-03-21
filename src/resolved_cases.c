@@ -182,15 +182,9 @@ void deletecase(struct ResolvedList *list, int CaseID){
     printf("\nCase not found!\n");
 }
 
-/*Main control*/
-int main(){
-    struct ResolvedList list;
-    initialize_list(&list);
 
-    int choice, CaseID, ItemID;
-    char ItemName[30], OwnerName[40], ReturnedDate[15], VerifiedBy[40], Remarks[50];
-
-    struct ResolvedNode *temp = NULL;
+void displayResolvedCasesMenu(){
+    int choice;
 
     do {
         printf("\n===== RESLOVED CASE MANAGEMENT =====\n\n");
@@ -301,4 +295,15 @@ int main(){
             default: printf("\nInvalid choice! Please try again\n");
         }
     } while(choice != 0);
+}
+
+/*Main control*/
+int run(){
+    struct ResolvedList list;
+    initialize_list(&list);
+
+    int choice, CaseID, ItemID;
+    char ItemName[30], OwnerName[40], ReturnedDate[15], VerifiedBy[40], Remarks[50];
+
+    struct ResolvedNode *temp = NULL;
 }

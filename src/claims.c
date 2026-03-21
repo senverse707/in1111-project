@@ -136,13 +136,10 @@ void toggle_status(Queue *q, int id)
     printf("Claim ID %d not found\n", id);
 }
 
-int main()
-{
-    Queue q = {NULL, NULL};
-    int choice;
 
-    while (1)
-    {
+displayClaimMenu(){
+    int choice;
+    do{
         printf("\n===== Claim Management Menu =====\n");
         printf("1. Add New Claim\n");
         printf("2. Show Front Claim\n");
@@ -191,6 +188,4 @@ int main()
             printf("Invalid choice! Try again.\n");
         }
     }
-
-    return 0;
 }

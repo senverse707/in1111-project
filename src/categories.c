@@ -81,8 +81,7 @@ void displayCategories() {
     }
 }
 
-// Main menu
-int main() {
+void displayCategoryMenu(){
     int choice;
 
     do {
@@ -116,6 +115,4 @@ int main() {
         }
 
     } while (choice != 0);
-
-    return 0;
 }
