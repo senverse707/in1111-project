@@ -21,7 +21,7 @@ typedef struct
     StaffNode *head;
 } CSLL;
 
-void clearBuffer();
+void clearBuffer(void);
 int generateStaffId();
 void initialize(CSLL *list);
 StaffNode *createStaffNode(StaffMember staffMember);
@@ -32,6 +32,6 @@ void rotateToNext(CSLL *list);
 void displayCurrentDuty(CSLL *list);
 void displayAllStaff(CSLL *list);
 void freeCircularList(CSLL *list);
-void staffMenu(CSLL *list);
+void displayStaffMenu(CSLL *list);
 
 #endif
