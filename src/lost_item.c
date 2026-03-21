@@ -203,29 +203,28 @@ void updateLostItem()
     printf("Lost items sorted by ID successfully!\n");
 }
 
-void LostItemMenu{
+void displayLostItemMenu(){
     int choice;
-    do{
+    do {
         printf("\n===== Lost Item Management Menu =====\n");
         printf("1. Insert Lost Item\n");
         printf("2. Display Lost Items\n");
         printf("3. Search Lost Item\n");
         printf("4. Delete Lost Item\n");
         printf("5. Update Lost Item\n");
-        printf("6. sort Lost Items(by ID)\n");
-        printf("7.Exit\n");
-
+        printf("6. Sort Lost Items (by ID)\n");
+        printf("0. Back to Main Menu\n");
         printf("Enter choice: ");
         scanf("%d", &choice);
-        switch(choice){
+        switch (choice) {
             case 1: insertLostItem(); break;
             case 2: displayLostItems(); break;
             case 3: searchLostItem(); break;
             case 4: deleteLostItem(); break;
             case 5: updateLostItem(); break;
-            case 6: sortLostItems();break;
-            case 7:exit(0);
+            case 6: sortLostItems(); break;
+            case 0: break;
             default: printf("Invalid choice\n");
         }
-    }while(choice != 0);
+    } while (choice != 0);
 }

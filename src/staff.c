@@ -3,13 +3,6 @@
 #include <string.h>
 #include "staff.h"
 
-void clearBuffer()
-{
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF)
-        ;
-}
-
 int nextId = 1;
 int generateStaffId()
 {
@@ -239,7 +232,7 @@ void freeCircularList(CSLL *list)
     list->head = NULL;
 }
 
-void staffMenu(CSLL *list)
+void displayStaffMenu(CSLL *list)
 {
     int choice;
 
@@ -293,11 +286,3 @@ void staffMenu(CSLL *list)
     } while (choice != 0);
 }
 
-int main()
-{
-    CSLL csll;
-    initialize(&csll);
-    staffMenu(&csll);
-    freeCircularList(&csll);
-    return 0;
-}

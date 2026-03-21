@@ -184,126 +184,131 @@ void deletecase(struct ResolvedList *list, int CaseID){
 
 
 void displayResolvedCasesMenu(){
-    int choice;
-
-    do {
-        printf("\n===== RESLOVED CASE MANAGEMENT =====\n\n");
-        printf("1.Display All Cases (Forward)\n");
-        printf("2.Display All Cases (Backward)\n");
-        printf("3.Add Case\n");
-        printf("4.Next Case\n");
-        printf("5.Previous Case\n");
-        printf("6.Display Current Case\n");
-        printf("7.Search Case\n");
-        printf("8.Update Remarks\n");
-        printf("9.Delete case\n");
-        printf("0.Exit\n");
-        printf("Please enter your choice number: ");
-        scanf("%d", &choice);
-
-        switch(choice){
-            case 1: traverseforward(&list);
-                    break;
-
-            case 2: traversebackward(&list);
-                    break;
-
-            case 3: bool duplicate;
-                    do{
-                        printf("Enter case ID: ");
-                        scanf("%d", &CaseID);
-                        getchar();
-                        printf("Enter item ID: ");
-                        scanf("%d", &ItemID);
-                        getchar();
-                        duplicate = isduplicate(&list, CaseID, ItemID);
-                        if (duplicate){
-                            printf("\nCaseID or ItemID already exists! Try a different one\n");
-                            }
-                        }while(duplicate);
-                        printf("Enter item name: ");
-                        fgets(ItemName,sizeof(ItemName),stdin);
-                        ItemName[strcspn(ItemName, "\n")] = '\0';
-                        printf("Enter owner name: ");
-                        fgets(OwnerName,sizeof(OwnerName),stdin);
-                        OwnerName[strcspn(OwnerName, "\n")] = '\0';
-                        printf("Enter returned date: ");
-                        fgets(ReturnedDate,sizeof(ReturnedDate),stdin);
-                        ReturnedDate[strcspn(ReturnedDate, "\n")] = '\0';
-                        printf("Enter verfied by: ");
-                        fgets(VerifiedBy,sizeof(VerifiedBy),stdin);
-                        VerifiedBy[strcspn(VerifiedBy, "\n")] = '\0';
-                        printf("Enter remarks: ");
-                        fgets(Remarks,sizeof(Remarks),stdin);
-                        Remarks[strcspn(Remarks, "\n")] = '\0';
-
-                        addcase(&list, CaseID, ItemID, ItemName, OwnerName, ReturnedDate, VerifiedBy, Remarks);
-                        break;
-
-            case 4: if (temp != NULL){
-                            temp = temp->next;
-                            printf("\nMoved to next case\n");
-                        }
-                    else {
-                        printf("\nEnter CaseID to start navigation: ");
-                        scanf("%d", &CaseID);
-                        getchar();
-                        temp = search(&list, CaseID);
-                    }
-                        break;
-
-            case 5: if (temp != NULL){
-                            temp = temp->prev;
-                            printf("\nMoved to previous case\n");
-                        }
-                    else {
-                        printf("\nEnter CaseID to start navigation: ");
-                        scanf("%d", &CaseID);
-                        getchar();
-                        temp = search(&list, CaseID);
-                    }
-                    break;
-
-            case 6: displaycase(temp);
-                    break;
-
-            case 7: printf("Enter CaseID to search: ");
-                    scanf("%d", &CaseID);
-                    getchar();
-                    temp = search(&list, CaseID);
-                    break;
-
-            case 8: printf("Enter CaseID to update: ");
-                    scanf("%d", &CaseID);
-                    getchar();
-                    printf("Enter new remarks: ");
-                    fgets(Remarks,sizeof(Remarks),stdin);
-                    update(&list, CaseID, Remarks);
-                    break;
-
-            case 9: printf("Enter CaseID to delete: ");
-                    scanf("%d", &CaseID);
-                    if (temp != NULL && temp->CaseID == CaseID){
-                        temp = temp->next;
-                    }
-                    deletecase(&list, CaseID);
-                    break;
-
-            case 0: printf("\nExiting...\n");
-            return 0;
-
-            default: printf("\nInvalid choice! Please try again\n");
-        }
-    } while(choice != 0);
-}
-
-/*Main control*/
-int run(){
     struct ResolvedList list;
     initialize_list(&list);
 
     int choice, CaseID, ItemID;
     char ItemName[30], OwnerName[40], ReturnedDate[15], VerifiedBy[40], Remarks[50];
-
     struct ResolvedNode *temp = NULL;
+
+    do {
+        printf("\n===== RESOLVED CASE MANAGEMENT =====\n\n");
+        printf("1. Display All Cases (Forward)\n");
+        printf("2. Display All Cases (Backward)\n");
+        printf("3. Add Case\n");
+        printf("4. Next Case\n");
+        printf("5. Previous Case\n");
+        printf("6. Display Current Case\n");
+        printf("7. Search Case\n");
+        printf("8. Update Remarks\n");
+        printf("9. Delete Case\n");
+        printf("0. Back to Main Menu\n");
+        printf("Please enter your choice number: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                traverseforward(&list);
+                break;
+
+            case 2:
+                traversebackward(&list);
+                break;
+
+            case 3: {
+                bool duplicate;
+                do {
+                    printf("Enter case ID: ");
+                    scanf("%d", &CaseID);
+                    getchar();
+                    printf("Enter item ID: ");
+                    scanf("%d", &ItemID);
+                    getchar();
+                    duplicate = isduplicate(&list, CaseID, ItemID);
+                    if (duplicate) {
+                        printf("\nCaseID or ItemID already exists! Try a different one\n");
+                    }
+                } while (duplicate);
+                printf("Enter item name: ");
+                fgets(ItemName, sizeof(ItemName), stdin);
+                ItemName[strcspn(ItemName, "\n")] = '\0';
+                printf("Enter owner name: ");
+                fgets(OwnerName, sizeof(OwnerName), stdin);
+                OwnerName[strcspn(OwnerName, "\n")] = '\0';
+                printf("Enter returned date: ");
+                fgets(ReturnedDate, sizeof(ReturnedDate), stdin);
+                ReturnedDate[strcspn(ReturnedDate, "\n")] = '\0';
+                printf("Enter verified by: ");
+                fgets(VerifiedBy, sizeof(VerifiedBy), stdin);
+                VerifiedBy[strcspn(VerifiedBy, "\n")] = '\0';
+                printf("Enter remarks: ");
+                fgets(Remarks, sizeof(Remarks), stdin);
+                Remarks[strcspn(Remarks, "\n")] = '\0';
+
+                addcase(&list, CaseID, ItemID, ItemName, OwnerName, ReturnedDate, VerifiedBy, Remarks);
+                break;
+            }
+
+            case 4:
+                if (temp != NULL) {
+                    temp = temp->next;
+                    printf("\nMoved to next case\n");
+                } else {
+                    printf("\nEnter CaseID to start navigation: ");
+                    scanf("%d", &CaseID);
+                    getchar();
+                    temp = search(&list, CaseID);
+                }
+                break;
+
+            case 5:
+                if (temp != NULL) {
+                    temp = temp->prev;
+                    printf("\nMoved to previous case\n");
+                } else {
+                    printf("\nEnter CaseID to start navigation: ");
+                    scanf("%d", &CaseID);
+                    getchar();
+                    temp = search(&list, CaseID);
+                }
+                break;
+
+            case 6:
+                displaycase(temp);
+                break;
+
+            case 7:
+                printf("Enter CaseID to search: ");
+                scanf("%d", &CaseID);
+                getchar();
+                temp = search(&list, CaseID);
+                break;
+
+            case 8:
+                printf("Enter CaseID to update: ");
+                scanf("%d", &CaseID);
+                getchar();
+                printf("Enter new remarks: ");
+                fgets(Remarks, sizeof(Remarks), stdin);
+                Remarks[strcspn(Remarks, "\n")] = '\0';
+                update(&list, CaseID, Remarks);
+                break;
+
+            case 9:
+                printf("Enter CaseID to delete: ");
+                scanf("%d", &CaseID);
+                if (temp != NULL && temp->CaseID == CaseID) {
+                    temp = temp->next;
+                }
+                deletecase(&list, CaseID);
+                break;
+
+            case 0:
+                printf("\nReturning to main menu...\n");
+                break;
+
+            default:
+                printf("\nInvalid choice! Please try again\n");
+        }
+    } while (choice != 0);
 }

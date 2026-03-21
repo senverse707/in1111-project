@@ -137,16 +137,17 @@ void toggle_status(Queue *q, int id)
 }
 
 
-displayClaimMenu(){
+void displayClaimMenu(){
+    Queue q = {NULL, NULL};
     int choice;
-    do{
+    do {
         printf("\n===== Claim Management Menu =====\n");
         printf("1. Add New Claim\n");
         printf("2. Show Front Claim\n");
         printf("3. Show All Claims\n");
         printf("4. Remove Front Claim\n");
         printf("5. Toggle Status by ID\n");
-        printf("6. Exit\n");
+        printf("0. Back to Main Menu\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
         printf("\n");
@@ -181,11 +182,10 @@ displayClaimMenu(){
             toggle_status(&q, id);
             break;
         }
-        case 6:
-            printf("Exiting program...\n");
-            exit(0);
+        case 0:
+            break;
         default:
             printf("Invalid choice! Try again.\n");
         }
-    }
+    } while (choice != 0);
 }
