@@ -26,7 +26,10 @@ Claim create_claim()
 
     return c;
 }
-/////////////////
+
+
+
+
 int enqueue(Claim c, Queue *q)
 {
     ClaimNode *newNode = malloc(sizeof(ClaimNode));
@@ -83,13 +86,13 @@ void peek(Queue *q)
     }
 
     Claim c = q->front->data;
-    printf("---- Front Claim ----\n");
-    printf("Claim ID: %d\n", c.claim_id);
-    printf("Name: %s\n", c.claimant_name);
-    printf("Item: %s\n", c.item_name);
-    printf("Date: %s\n", c.claim_date);
-    printf("Contact: %s\n", c.contact_number);
-    printf("Status: %s\n", (c.status == PENDING) ? "Pending" : "Approved");
+    printf("---- Front Claim ---- \n");
+    printf("Claim ID: %d \n", c.claim_id);
+    printf("Name: %s \n", c.claimant_name);
+    printf("Item: %s \n", c.item_name);
+    printf("Date: %s \n", c.claim_date);
+    printf("Contact: %s \n", c.contact_number);
+    printf("Status: %s \n", (c.status == PENDING) ? "Pending" : "Approved");
     printf("--------------------\n");
 }
 
@@ -108,12 +111,12 @@ void all(Queue *q)
     {
         Claim c = temp->data;
 
-        printf("Claim ID: %d\n", c.claim_id);
-        printf("Name: %s\n", c.claimant_name);
-        printf("Item: %s\n", c.item_name);
+        printf("Claim ID:  %d \n", c.claim_id);
+        printf("Name: %s \n", c.claimant_name);
+        printf("Item: %s \n", c.item_name);
         printf("Date: %s\n", c.claim_date);
-        printf("Contact: %s\n", c.contact_number);
-        printf("Status: %s\n", (c.status == PENDING) ? "Pending" : "Approved");
+        printf("Contact: %s \n", c.contact_number);
+        printf("Status: %s \n", (c.status == PENDING) ? "Pending" : "Approved");
         printf("-------------------\n");
 
         temp = temp->next;
@@ -128,12 +131,12 @@ void toggle_status(Queue *q, int id)
         if (temp->data.claim_id == id)
         {
             temp->data.status = (temp->data.status == PENDING) ? APPROVED : PENDING;
-            printf("Status toggled for Claim ID %d\n", id);
+            printf("Status toggled for Claim ID %d  \n", id);
             return;
         }
         temp = temp->next;
     }
-    printf("Claim ID %d not found\n", id);
+    printf("Claim ID %d not found \n", id);
 }
 
 
@@ -142,13 +145,13 @@ void displayClaimMenu(){
     int choice;
     do {
         printf("\n===== Claim Management Menu =====\n");
-        printf("1. Add New Claim\n");
-        printf("2. Show Front Claim\n");
-        printf("3. Show All Claims\n");
-        printf("4. Remove Front Claim\n");
-        printf("5. Toggle Status by ID\n");
-        printf("0. Back to Main Menu\n");
-        printf("Enter your choice: ");
+        printf("1. Add New Claim   \n");
+        printf("2. Show Front Claim \n");
+        printf("3. Show All Claims \n");
+        printf("4. Remove Front Claim \n");
+        printf("5. Toggle Status by ID \n");
+        printf("0. Back to Main Menu\n ");
+        printf("Enter your choice:  ");
         scanf("%d", &choice);
         printf("\n");
 
@@ -157,8 +160,8 @@ void displayClaimMenu(){
         case 1:
         {
             Claim c = create_claim();
-            enqueue(c, &q);
-            printf("Claim added successfully!\n");
+            enqueue(c,&q);
+            printf("Claim added successfully! \n");
             break;
         }
         case 2:
@@ -171,7 +174,7 @@ void displayClaimMenu(){
         {
             Claim removed = dequeue(&q);
             if (removed.claim_id != 0)
-                printf("Removed Claim ID: %d\n", removed.claim_id);
+                printf("Removed Claim ID: %d \n", removed.claim_id);
             break;
         }
         case 5:
@@ -185,7 +188,7 @@ void displayClaimMenu(){
         case 0:
             break;
         default:
-            printf("Invalid choice! Try again.\n");
+            printf("Invalid choice! Try again. \n");
         }
-    } while (choice != 0);
+    }   while (choice != 0);
 }
