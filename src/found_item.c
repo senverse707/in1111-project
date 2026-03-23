@@ -6,24 +6,33 @@
 FoundItemNode *foundHead = NULL, *foundTail = NULL;
 int foundIdCounter = 1;
 
-// Insert
+// Insert item
 void insertItem() {
     FoundItemNode *newNode = (FoundItemNode *)malloc(sizeof(FoundItemNode));
 
+ 
     newNode->itemID = foundIdCounter++;
 
-    printf("Item Name: ");
+
+    
+    printf("Item Name: "); 
     scanf(" %[^\n]", newNode->itemName);
+    
     printf("Category: ");
     scanf(" %[^\n]", newNode->category);
+    
     printf("Color: ");
     scanf(" %[^\n]", newNode->color);
+    
     printf("Location Found: ");
     scanf(" %[^\n]", newNode->location);
+    
     printf("Date Found: ");
     scanf(" %[^\n]", newNode->date);
+    
     printf("Finder Name: ");
     scanf(" %[^\n]", newNode->finderName);
+    
     printf("Contact: ");
     scanf(" %[^\n]", newNode->contact);
 
@@ -44,32 +53,35 @@ void insertItem() {
 void displayForward() {
     FoundItemNode *temp = foundHead;
     while (temp != NULL) {
-        printf("\nID: %d\nName: %s\nCategory: %s\n",
-               temp->itemID, temp->itemName, temp->category);
+        printf("\nID: %d\nName: %s\nCategory: %s\n", temp->itemID, temp->itemName, temp->category);
         temp = temp->next;
     }
 }
 
 // Display backward
 void displayBackward() {
+    
     FoundItemNode *temp = foundTail;
+    
     while (temp != NULL) {
-        printf("\nID: %d\nName: %s\nCategory: %s\n",
-               temp->itemID, temp->itemName, temp->category);
+        printf("\nID: %d\nName: %s\nCategory: %s\n", temp->itemID, temp->itemName, temp->category);
+        
         temp = temp->prev;
     }
 }
 
-// Search
+// Search Item
 void searchItem() {
     int id;
+    
     printf("Enter ID: ");
     scanf("%d", &id);
 
     FoundItemNode *temp = foundHead;
+    
     while (temp != NULL) {
         if (temp->itemID == id) {
-            printf("Found: %s\n", temp->itemName);
+            printf("Found: %s \n", temp->itemName);
             return;
         }
         temp = temp->next;
@@ -77,7 +89,7 @@ void searchItem() {
     printf("Not found\n");
 }
 
-// Delete
+// Delete item
 void deleteItem() {
     int id;
     printf("Enter ID to delete: ");
@@ -102,26 +114,49 @@ void deleteItem() {
     printf("Item not found\n");
 }
 
+// display Found Item Menu
 void displayFoundItemMenu(){
     int choice;
     do{
         printf("\n===== Found Item Management Menu =====\n");
+        
         printf("1. Insert Item\n");
+        
         printf("2. Delete Item\n");
+        
         printf("3. Search Item\n");
+        
         printf("4. Display Forward\n");
+        
         printf("5. Display Backward\n");
+        
         printf("0. Exit\n");
+        
         printf("Enter your choice: ");
+        
         scanf("%d", &choice);
+        
         switch(choice){
-            case 1: insertItem(); break;
-            case 2: deleteItem(); break;
-            case 3: searchItem(); break;
-            case 4: displayForward(); break;
-            case 5: displayBackward(); break;
-            case 0: printf("Exiting program...\n"); break;
-            default: printf("Invalid choice. Try again.\n");
+            case 1:
+                insertItem(); 
+                break;
+            case 2:
+                deleteItem(); 
+                break;
+            case 3: 
+                searchItem();
+                break;
+            case 4: 
+                displayForward();
+                break;
+            case 5:
+                displayBackward();
+                break;
+            case 0:
+                printf("Exiting program...\n");
+                break;
+            default:
+                printf("Invalid choice. Try again.\n");
         }
     } while (choice != 0);
 }
