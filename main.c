@@ -18,6 +18,7 @@ int main() {
     struct ResolvedList resolvedList;
     initialize_list(&resolvedList);
 
+    
     do {
         printf("\n=========================================\n");
         printf("  Lost and Found Management System\n");
@@ -32,24 +33,46 @@ int main() {
         printf("  0. Exit\n");
         printf("=========================================\n");
         printf("  Enter your choice: ");
+
+        
         if (scanf("%d", &choice) != 1) {
             printf("\n  Invalid input. Please enter a number.\n");
             clearBuffer();
             choice = -1;
             continue;
         }
+
+        
         clearBuffer();
 
         switch (choice) {
-            case 1: displayActionsMenu(); break;
-            case 2: displayCategoryMenu(); break;
-            case 3: displayClaimMenu(&claimQueue); break;
-            case 4: displayFoundItemMenu(); break;
-            case 5: displayLostItemMenu(); break;
-            case 6: displayResolvedCasesMenu(&resolvedList); break;
-            case 7: displayStaffMenu(&staffList); break;
-            case 0: printf("\nGoodbye!\n"); break;
-            default: printf("\nInvalid choice. Try again.\n"); break;
+            case 1: 
+                displayActionsMenu();
+                break;
+            case 2: 
+                displayCategoryMenu();
+                break;
+            case 3:
+                displayClaimMenu(&claimQueue); 
+                break;
+            case 4:
+                displayFoundItemMenu();
+                break;
+            case 5: 
+                displayLostItemMenu();
+                break;
+            case 6: 
+                displayResolvedCasesMenu(&resolvedList);
+                break;
+            case 7:
+                displayStaffMenu(&staffList);
+                break;
+            case 0: 
+                printf("\nGoodbye!\n"); 
+                break;
+            default: 
+                printf("\nInvalid choice. Try again.\n"); 
+                break;
         }
     } while (choice != 0);
 
@@ -89,7 +112,11 @@ int main() {
 
     /* Free resolved cases circular doubly linked list */
     if (resolvedList.head != NULL) {
+
+        
         struct ResolvedNode *cur = resolvedList.head->next;
+
+        
         while (cur != resolvedList.head) {
             struct ResolvedNode *tmp = cur;
             cur = cur->next;
@@ -98,6 +125,8 @@ int main() {
         free(resolvedList.head);
     }
 
+
+    
     /* Free action stack */
     while (stackTop) {
         ActionNode *tmp = stackTop;
