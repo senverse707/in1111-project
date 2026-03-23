@@ -155,12 +155,15 @@ void displayClaimMenu(Queue *q){
         printf("5. Toggle Status by ID\n");
         printf("0. Back to Main Menu\n");
         printf("Enter your choice: ");
+        
         if (scanf("%d", &choice) != 1) {
             printf("\nInvalid input. Please enter a number.\n");
             clearBuffer();
             choice = -1;
             continue;
+            
         }
+        
         clearBuffer();
         printf("\n");
 
