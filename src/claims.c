@@ -33,7 +33,9 @@ Claim create_claim()
 
     return c;
 }
-/////////////////
+
+
+
 int enqueue(Claim c, Queue *q)
 {
     ClaimNode *newNode = malloc(sizeof(ClaimNode));
