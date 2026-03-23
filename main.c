@@ -8,6 +8,9 @@
 #include "resolved_cases.h"
 #include "staff.h"
 
+
+
+
 int main() {
     int choice;
     CSLL staffList;
@@ -30,15 +33,33 @@ int main() {
         scanf("%d", &choice);
 
         switch (choice) {
-            case 1: displayAtionsMenu(); break;
-            case 2: displayCategoryMenu(); break;
-            case 3: displayClaimMenu(); break;
-            case 4: displayFoundItemMenu(); break;
-            case 5: displayLostItemMenu(); break;
-            case 6: displayResolvedCasesMenu(); break;
-            case 7: displayStaffMenu(&staffList); break;
-            case 0: printf("\nGoodbye!\n"); break;
-            default: printf("\nInvalid choice. Try again.\n"); break;
+            case 1: 
+                displayAtionsMenu();
+                break;
+            case 2: 
+                displayCategoryMenu(); 
+                break;
+            case 3: 
+                displayClaimMenu(); 
+                break;
+            case 4: 
+                displayFoundItemMenu();
+                break;
+            case 5:
+                displayLostItemMenu();
+                break;
+            case 6:
+                displayResolvedCasesMenu(); 
+                break;
+            case 7:
+                displayStaffMenu(&staffList);
+                break;
+            case 0: 
+                printf("\nGoodbye!\n");
+                break;
+            default:
+                printf("\nInvalid choice. Try again.\n"); 
+                break;
         }
     } while (choice != 0);
 
