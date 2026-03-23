@@ -9,7 +9,7 @@ ActionNode *stackTop = NULL;
 int stackSize = 0;
 int actionCounter = 1;
 
-/* ── helpers ─────────────────────────────── */
+/* helpers  */
 void clearBuffer(void)
 {
     int c;
@@ -31,7 +31,7 @@ void getCurrentTime(char *buf)
     strftime(buf, 20, "%Y-%m-%d %H:%M", tm);
 }
 
-/* ── stack operations ────────────────────── */
+/* stack operations */
 
 void pushAction(const char *desc, const char *type)
 {
@@ -133,7 +133,7 @@ void countActionsByType(void)
     printf("  TOTAL  : %d\n", ins + del + upd + other);
 }
 
-/* ── manual push input ───────────────────── */
+/* manually push input */
 void pushManual(void)
 {
     char desc[100], type[20];
@@ -146,7 +146,7 @@ void pushManual(void)
     pushAction(desc, type);
 }
 
-/* ── sample data ─────────────────────────── */
+/*  sample data for stack loading  */
 void loadSampleData(void)
 {
     pushAction("Lost item added: iPhone 13 (ID:1)", "INSERT");
