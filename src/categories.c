@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "categories.h"
+#include "actions.h"
 
 char categories[MAX_CATEGORIES][MAX_LENGTH];
 int categoryCount = 0;
@@ -14,8 +15,11 @@ void addCategory() {
 
     printf("Enter category name: ");
     scanf(" %[^\n]", categories[categoryCount]);
+    char logMsg[100];
+    snprintf(logMsg, sizeof(logMsg), "Category added: %s", categories[categoryCount]);
     categoryCount++;
 
+    pushAction(logMsg, "INSERT");
     printf("Category added successfully.\n");
 }
 
@@ -39,6 +43,9 @@ void updateCategory() {
     printf("Enter new category name: ");
     scanf(" %[^\n]", categories[index - 1]);
 
+    char logMsg[100];
+    snprintf(logMsg, sizeof(logMsg), "Category updated: %s (pos:%d)", categories[index - 1], index);
+    pushAction(logMsg, "UPDATE");
     printf("Category updated successfully.\n");
 }
 
@@ -92,7 +99,13 @@ void displayCategoryMenu(){
         printf("4. Display Categories\n");
         printf("0. Exit\n");
         printf("Enter your choice: ");
-        scanf("%d", &choice);
+        if (scanf("%d", &choice) != 1) {
+            printf("Invalid input. Please enter a number.\n");
+            clearBuffer();
+            choice = -1;
+            continue;
+        }
+        clearBuffer();
 
         switch (choice) {
             case 1:

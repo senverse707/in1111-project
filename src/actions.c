@@ -157,7 +157,7 @@ void loadSampleData(void)
     printf("  [OK] 5 sample actions loaded.\n");
 }
 
-void displayAtionsMenu(){
+void displayActionsMenu(){
     int ch;
     do
     {

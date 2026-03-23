@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "resolved_cases.h"
+#include "actions.h"
 
 void initialize_list(struct ResolvedList *list){
     list->head = NULL;
@@ -98,6 +99,9 @@ void addcase(struct ResolvedList *list, int CaseID, int ItemID, char ItemName[],
         list->tail = NewNode;
     }
 
+    char logMsg[100];
+    snprintf(logMsg, sizeof(logMsg), "Resolved case added: %s (CaseID:%d)", ItemName, CaseID);
+    pushAction(logMsg, "INSERT");
     printf("\nCase inserted successfully!\n");
 };
 
@@ -142,6 +146,9 @@ void update(struct ResolvedList *list, int CaseID, char NewRemarks[]){
     struct ResolvedNode *temp = search(list, CaseID);
     if (temp != NULL){
         strcpy(temp->Remarks, NewRemarks);
+        char logMsg[100];
+        snprintf(logMsg, sizeof(logMsg), "Resolved case remarks updated (CaseID:%d)", CaseID);
+        pushAction(logMsg, "UPDATE");
         printf("\nRemarks updated successfully!\n");
     }
 }
@@ -173,7 +180,10 @@ void deletecase(struct ResolvedList *list, int CaseID){
                 temp->prev->next = temp->next;
                 temp->next->prev = temp->prev;
             }
+            char logMsg[100];
+            snprintf(logMsg, sizeof(logMsg), "Resolved case deleted (CaseID:%d)", temp->CaseID);
             free(temp);
+            pushAction(logMsg, "DELETE");
             printf("\nCase successfully deleted!\n");
             return;
         }
@@ -183,10 +193,7 @@ void deletecase(struct ResolvedList *list, int CaseID){
 }
 
 
-void displayResolvedCasesMenu(){
-    struct ResolvedList list;
-    initialize_list(&list);
-
+void displayResolvedCasesMenu(struct ResolvedList *list){
     int choice, CaseID, ItemID;
     char ItemName[30], OwnerName[40], ReturnedDate[15], VerifiedBy[40], Remarks[50];
     struct ResolvedNode *temp = NULL;
@@ -208,11 +215,11 @@ void displayResolvedCasesMenu(){
 
         switch (choice) {
             case 1:
-                traverseforward(&list);
+                traverseforward(list);
                 break;
 
             case 2:
-                traversebackward(&list);
+                traversebackward(list);
                 break;
 
             case 3: {
@@ -224,7 +231,7 @@ void displayResolvedCasesMenu(){
                     printf("Enter item ID: ");
                     scanf("%d", &ItemID);
                     getchar();
-                    duplicate = isduplicate(&list, CaseID, ItemID);
+                    duplicate = isduplicate(list, CaseID, ItemID);
                     if (duplicate) {
                         printf("\nCaseID or ItemID already exists! Try a different one\n");
                     }
@@ -245,7 +252,7 @@ void displayResolvedCasesMenu(){
                 fgets(Remarks, sizeof(Remarks), stdin);
                 Remarks[strcspn(Remarks, "\n")] = '\0';
 
-                addcase(&list, CaseID, ItemID, ItemName, OwnerName, ReturnedDate, VerifiedBy, Remarks);
+                addcase(list, CaseID, ItemID, ItemName, OwnerName, ReturnedDate, VerifiedBy, Remarks);
                 break;
             }
 
@@ -257,7 +264,7 @@ void displayResolvedCasesMenu(){
                     printf("\nEnter CaseID to start navigation: ");
                     scanf("%d", &CaseID);
                     getchar();
-                    temp = search(&list, CaseID);
+                    temp = search(list, CaseID);
                 }
                 break;
 
@@ -269,7 +276,7 @@ void displayResolvedCasesMenu(){
                     printf("\nEnter CaseID to start navigation: ");
                     scanf("%d", &CaseID);
                     getchar();
-                    temp = search(&list, CaseID);
+                    temp = search(list, CaseID);
                 }
                 break;
 
@@ -281,7 +288,7 @@ void displayResolvedCasesMenu(){
                 printf("Enter CaseID to search: ");
                 scanf("%d", &CaseID);
                 getchar();
-                temp = search(&list, CaseID);
+                temp = search(list, CaseID);
                 break;
 
             case 8:
@@ -291,7 +298,7 @@ void displayResolvedCasesMenu(){
                 printf("Enter new remarks: ");
                 fgets(Remarks, sizeof(Remarks), stdin);
                 Remarks[strcspn(Remarks, "\n")] = '\0';
-                update(&list, CaseID, Remarks);
+                update(list, CaseID, Remarks);
                 break;
 
             case 9:
@@ -300,7 +307,7 @@ void displayResolvedCasesMenu(){
                 if (temp != NULL && temp->CaseID == CaseID) {
                     temp = temp->next;
                 }
-                deletecase(&list, CaseID);
+                deletecase(list, CaseID);
                 break;
 
             case 0:

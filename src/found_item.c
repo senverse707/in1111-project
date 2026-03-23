@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "found_item.h"
+#include "actions.h"
 
 FoundItemNode *foundHead = NULL, *foundTail = NULL;
 int foundIdCounter = 1;
@@ -37,6 +38,9 @@ void insertItem() {
         foundTail = newNode;
     }
 
+    char logMsg[100];
+    snprintf(logMsg, sizeof(logMsg), "Found item added: %s (ID:%d)", newNode->itemName, newNode->itemID);
+    pushAction(logMsg, "INSERT");
     printf("[OK] Item added successfully\n");
 }
 
@@ -93,7 +97,10 @@ void deleteItem() {
             if (temp->prev) temp->prev->next = temp->next;
             if (temp->next) temp->next->prev = temp->prev;
 
+            char logMsg[100];
+            snprintf(logMsg, sizeof(logMsg), "Found item deleted: %s (ID:%d)", temp->itemName, temp->itemID);
             free(temp);
+            pushAction(logMsg, "DELETE");
             printf("Deleted successfully\n");
             return;
         }
@@ -113,7 +120,13 @@ void displayFoundItemMenu(){
         printf("5. Display Backward\n");
         printf("0. Exit\n");
         printf("Enter your choice: ");
-        scanf("%d", &choice);
+        if (scanf("%d", &choice) != 1) {
+            printf("Invalid input. Please enter a number.\n");
+            clearBuffer();
+            choice = -1;
+            continue;
+        }
+        clearBuffer();
         switch(choice){
             case 1: insertItem(); break;
             case 2: deleteItem(); break;

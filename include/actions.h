@@ -24,6 +24,6 @@ void displayActionHistory(void);
 void countActionsByType(void);
 void pushManual(void);
 void loadSampleData(void);
-void displayAtionsMenu();
+void displayActionsMenu();
 
 #endif

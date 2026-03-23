@@ -2,25 +2,32 @@
 #include <stdlib.h>
 #include <string.h>
 #include "claims.h"
+#include "actions.h"
 
 
 Claim create_claim()
 {
     static int next_id = 1;   // static counter persists across calls
     Claim c;
-    c.claim_id = next_id++;   // auto-increment
+    c.claim_id = next_id++;
+
+    clearBuffer();
 
     printf("Enter claimant name: ");
-    scanf("%s", c.claimant_name);
+    fgets(c.claimant_name, sizeof(c.claimant_name), stdin);
+    c.claimant_name[strcspn(c.claimant_name, "\n")] = '\0';
 
     printf("Enter item name: ");
-    scanf("%s", c.item_name);
+    fgets(c.item_name, sizeof(c.item_name), stdin);
+    c.item_name[strcspn(c.item_name, "\n")] = '\0';
 
     printf("Enter claim date (YYYY-MM-DD): ");
-    scanf("%s", c.claim_date);
+    fgets(c.claim_date, sizeof(c.claim_date), stdin);
+    c.claim_date[strcspn(c.claim_date, "\n")] = '\0';
 
     printf("Enter contact number: ");
-    scanf("%s", c.contact_number);
+    fgets(c.contact_number, sizeof(c.contact_number), stdin);
+    c.contact_number[strcspn(c.contact_number, "\n")] = '\0';
 
     c.status = PENDING;       // default
 
@@ -137,8 +144,7 @@ void toggle_status(Queue *q, int id)
 }
 
 
-void displayClaimMenu(){
-    Queue q = {NULL, NULL};
+void displayClaimMenu(Queue *q){
     int choice;
     do {
         printf("\n===== Claim Management Menu =====\n");
@@ -149,7 +155,13 @@ void displayClaimMenu(){
         printf("5. Toggle Status by ID\n");
         printf("0. Back to Main Menu\n");
         printf("Enter your choice: ");
-        scanf("%d", &choice);
+        if (scanf("%d", &choice) != 1) {
+            printf("\nInvalid input. Please enter a number.\n");
+            clearBuffer();
+            choice = -1;
+            continue;
+        }
+        clearBuffer();
         printf("\n");
 
         switch (choice)
@@ -157,21 +169,28 @@ void displayClaimMenu(){
         case 1:
         {
             Claim c = create_claim();
-            enqueue(c, &q);
+            enqueue(c, q);
+            char logMsg[100];
+            snprintf(logMsg, sizeof(logMsg), "Claim enqueued: %s for %s (ID:%d)", c.claimant_name, c.item_name, c.claim_id);
+            pushAction(logMsg, "INSERT");
             printf("Claim added successfully!\n");
             break;
         }
         case 2:
-            peek(&q);
+            peek(q);
             break;
         case 3:
-            all(&q);
+            all(q);
             break;
         case 4:
         {
-            Claim removed = dequeue(&q);
-            if (removed.claim_id != 0)
+            Claim removed = dequeue(q);
+            if (removed.claim_id != 0) {
+                char logMsg[100];
+                snprintf(logMsg, sizeof(logMsg), "Claim dequeued: %s (ID:%d)", removed.claimant_name, removed.claim_id);
+                pushAction(logMsg, "DELETE");
                 printf("Removed Claim ID: %d\n", removed.claim_id);
+            }
             break;
         }
         case 5:
@@ -179,7 +198,10 @@ void displayClaimMenu(){
             int id;
             printf("Enter Claim ID to toggle status: ");
             scanf("%d", &id);
-            toggle_status(&q, id);
+            toggle_status(q, id);
+            char logMsg2[100];
+            snprintf(logMsg2, sizeof(logMsg2), "Claim status toggled (ID:%d)", id);
+            pushAction(logMsg2, "UPDATE");
             break;
         }
         case 0:

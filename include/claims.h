@@ -31,6 +31,6 @@ Claim dequeue(Queue *q);
 void peek(Queue *q);
 void all(Queue *q);
 void toggle_status(Queue *q, int id);
-void displayClaimMenu();
+void displayClaimMenu(Queue *q);
 
 #endif

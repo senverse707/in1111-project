@@ -21,7 +21,6 @@ typedef struct
     StaffNode *head;
 } CSLL;
 
-void clearBuffer(void);
 int generateStaffId();
 void initialize(CSLL *list);
 StaffNode *createStaffNode(StaffMember staffMember);

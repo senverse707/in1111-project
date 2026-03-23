@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "lost_item.h"
+#include "actions.h"
 
 struct LostItem *lostHead = NULL;
 
@@ -12,27 +13,35 @@ void insertLostItem()
 
     printf("Enter Lost Item ID: ");
     scanf("%d", &newNode->id);
+    clearBuffer();
 
     printf("Enter Item Name: ");
-    scanf("%s", newNode->name);
+    fgets(newNode->name, sizeof(newNode->name), stdin);
+    newNode->name[strcspn(newNode->name, "\n")] = '\0';
 
     printf("Enter Category: ");
-    scanf("%s", newNode->category);
+    fgets(newNode->category, sizeof(newNode->category), stdin);
+    newNode->category[strcspn(newNode->category, "\n")] = '\0';
 
     printf("Enter Color: ");
-    scanf("%s", newNode->color);
+    fgets(newNode->color, sizeof(newNode->color), stdin);
+    newNode->color[strcspn(newNode->color, "\n")] = '\0';
 
     printf("Enter Location Lost: ");
-    scanf("%s", newNode->location);
+    fgets(newNode->location, sizeof(newNode->location), stdin);
+    newNode->location[strcspn(newNode->location, "\n")] = '\0';
 
     printf("Enter Date Lost: ");
-    scanf("%s", newNode->date);
+    fgets(newNode->date, sizeof(newNode->date), stdin);
+    newNode->date[strcspn(newNode->date, "\n")] = '\0';
 
     printf("Enter Owner Name: ");
-    scanf("%s", newNode->owner);
+    fgets(newNode->owner, sizeof(newNode->owner), stdin);
+    newNode->owner[strcspn(newNode->owner, "\n")] = '\0';
 
     printf("Enter Contact Number: ");
-    scanf("%s", newNode->contact);
+    fgets(newNode->contact, sizeof(newNode->contact), stdin);
+    newNode->contact[strcspn(newNode->contact, "\n")] = '\0';
 
     newNode->next = NULL;
 
@@ -50,6 +59,9 @@ void insertLostItem()
         temp->next = newNode;
     }
 
+    char logMsg[100];
+    snprintf(logMsg, sizeof(logMsg), "Lost item added: %s (ID:%d)", newNode->name, newNode->id);
+    pushAction(logMsg, "INSERT");
     printf("Lost item added successfully!\n");
 }
 
@@ -83,6 +95,7 @@ void searchLostItem()
     int id;
     printf("Enter Lost Item ID to search: ");
     scanf("%d", &id);
+    clearBuffer();
 
     struct LostItem *temp = lostHead;
 
@@ -106,14 +119,18 @@ void deleteLostItem()
     int id;
     printf("Enter ID to delete: ");
     scanf("%d", &id);
+    clearBuffer();
 
     struct LostItem *temp = lostHead;
     struct LostItem *prev = NULL;
 
     if(temp != NULL && temp->id == id)
     {
+        char logMsg[100];
+        snprintf(logMsg, sizeof(logMsg), "Lost item deleted: %s (ID:%d)", temp->name, temp->id);
         lostHead = temp->next;
         free(temp);
+        pushAction(logMsg, "DELETE");
         printf("Item deleted.\n");
         return;
     }
@@ -130,9 +147,12 @@ void deleteLostItem()
         return;
     }
 
+    char logMsg[100];
+    snprintf(logMsg, sizeof(logMsg), "Lost item deleted: %s (ID:%d)", temp->name, temp->id);
     prev->next = temp->next;
     free(temp);
 
+    pushAction(logMsg, "DELETE");
     printf("Item deleted successfully.\n");
 }
 
@@ -141,6 +161,7 @@ void updateLostItem()
     int id;
     printf("Enter ID to update: ");
     scanf("%d", &id);
+    clearBuffer();
 
     struct LostItem *temp = lostHead;
 
@@ -149,14 +170,20 @@ void updateLostItem()
         if(temp->id == id)
         {
             printf("Enter New Item Name: ");
-            scanf("%s", temp->name);
+            fgets(temp->name, sizeof(temp->name), stdin);
+            temp->name[strcspn(temp->name, "\n")] = '\0';
 
             printf("Enter New Category: ");
-            scanf("%s", temp->category);
+            fgets(temp->category, sizeof(temp->category), stdin);
+            temp->category[strcspn(temp->category, "\n")] = '\0';
 
             printf("Enter New Color: ");
-            scanf("%s", temp->color);
+            fgets(temp->color, sizeof(temp->color), stdin);
+            temp->color[strcspn(temp->color, "\n")] = '\0';
 
+            char logMsg[100];
+            snprintf(logMsg, sizeof(logMsg), "Lost item updated (ID:%d)", temp->id);
+            pushAction(logMsg, "UPDATE");
             printf("Update successful!\n");
             return;
         }
@@ -200,6 +227,7 @@ void updateLostItem()
 
     lostHead = sorted;
 
+    pushAction("Lost items sorted by ID", "UPDATE");
     printf("Lost items sorted by ID successfully!\n");
 }
 
@@ -215,7 +243,13 @@ void displayLostItemMenu(){
         printf("6. Sort Lost Items (by ID)\n");
         printf("0. Back to Main Menu\n");
         printf("Enter choice: ");
-        scanf("%d", &choice);
+        if (scanf("%d", &choice) != 1) {
+            printf("Invalid input. Please enter a number.\n");
+            clearBuffer();
+            choice = -1;
+            continue;
+        }
+        clearBuffer();
         switch (choice) {
             case 1: insertLostItem(); break;
             case 2: displayLostItems(); break;

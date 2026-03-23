@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "staff.h"
+#include "actions.h"
 
 int nextId = 1;
 int generateStaffId()
@@ -82,6 +83,9 @@ void addStaff(CSLL *list)
         newNode->next = list->head;
     }
 
+    char logMsg[100];
+    snprintf(logMsg, sizeof(logMsg), "Staff added: %s (ID:%d)", newNode->data.name, newNode->data.id);
+    pushAction(logMsg, "INSERT");
     printf("\n  [SUCCESS] Staff '%s' added (ID: %d).\n", newNode->data.name, newNode->data.id);
 }
 
@@ -156,7 +160,10 @@ void removeStaff(CSLL *list)
         }
     }
 
+    char logMsg[100];
+    snprintf(logMsg, sizeof(logMsg), "Staff removed: %s (ID:%d)", curr->data.name, curr->data.id);
     free(curr);
+    pushAction(logMsg, "DELETE");
     printf("  [SUCCESS] Staff removed.\n");
 }
 
@@ -169,6 +176,9 @@ void rotateToNext(CSLL *list)
     }
 
     list->head = list->head->next;
+    char logMsg[100];
+    snprintf(logMsg, sizeof(logMsg), "Duty rotated to: %s (ID:%d)", list->head->data.name, list->head->data.id);
+    pushAction(logMsg, "UPDATE");
     printf("  [INFO] Rotated. Current on duty: %s (ID: %d, Shift: %s)\n",
            list->head->data.name, list->head->data.id, list->head->data.shift);
 }
@@ -240,7 +250,7 @@ void displayStaffMenu(CSLL *list)
     {
         printf("\n");
         printf("  ========================================\n");
-        printf("    STAFF DUTY ROTATION (Circular SLL)\n");
+        printf("    STAFF DUTY ROTATION\n");
         printf("  ========================================\n");
         printf("    1. Add Staff Member\n");
         printf("    2. Remove Staff Member\n");
