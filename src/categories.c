@@ -7,7 +7,9 @@ char categories[MAX_CATEGORIES][MAX_LENGTH];
 int categoryCount = 0;
 
 // Add category
+
 void addCategory() {
+
     if (categoryCount >= MAX_CATEGORIES) {
         printf("Category list is full.\n");
         return;
@@ -15,6 +17,7 @@ void addCategory() {
 
     printf("Enter category name: ");
     scanf(" %[^\n]", categories[categoryCount]);
+
     char logMsg[100];
     snprintf(logMsg, sizeof(logMsg), "Category added: %s", categories[categoryCount]);
     categoryCount++;
@@ -24,6 +27,7 @@ void addCategory() {
 }
 
 // Update category
+
 void updateCategory() {
     int index;
 
@@ -44,12 +48,16 @@ void updateCategory() {
     scanf(" %[^\n]", categories[index - 1]);
 
     char logMsg[100];
+
     snprintf(logMsg, sizeof(logMsg), "Category updated: %s (pos:%d)", categories[index - 1], index);
+    
     pushAction(logMsg, "UPDATE");
+    
     printf("Category updated successfully.\n");
 }
 
 // Search category
+
 void searchCategory() {
     char search[MAX_LENGTH];
     int found = 0;
@@ -92,19 +100,24 @@ void displayCategoryMenu(){
     int choice;
 
     do {
+
         printf("\n===== Item Category Management =====\n");
-        printf("1. Add Category\n");
-        printf("2. Update Category\n");
+
+        printf("1. Add Category  \n");
+        printf("2. Update Category  \n");
         printf("3. Search Category\n");
         printf("4. Display Categories\n");
         printf("0. Exit\n");
+
         printf("Enter your choice: ");
+
         if (scanf("%d", &choice) != 1) {
             printf("Invalid input. Please enter a number.\n");
             clearBuffer();
             choice = -1;
             continue;
         }
+
         clearBuffer();
 
         switch (choice) {

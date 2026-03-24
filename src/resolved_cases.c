@@ -19,11 +19,17 @@ struct ResolvedNode *create_node(int CaseID, int ItemID, char ItemName[], char O
 
     NewNode->CaseID = CaseID;
     NewNode->ItemID = ItemID;
+
     strcpy(NewNode->ItemName, ItemName);
+
     strcpy(NewNode->OwnerName, OwnerName);
+
     strcpy(NewNode->ReturnedDate, ReturnedDate);
+
     strcpy(NewNode->VerifiedBy, VerifiedBy);
+
     strcpy(NewNode->Remarks, Remarks);
+
     NewNode->next = NULL;
     NewNode->prev = NULL;
 
@@ -32,11 +38,15 @@ struct ResolvedNode *create_node(int CaseID, int ItemID, char ItemName[], char O
 }
 
 /*Traverse Forward*/
+
 void traverseforward(struct ResolvedList *list){
+
     if (list->head == NULL){
+
         printf("\nCase list is empty!\n");
         return;
     }
+
     struct ResolvedNode *temp = list->head;
     printf("\n---All Cases (Forward)---\n\n");
     do {
@@ -46,8 +56,11 @@ void traverseforward(struct ResolvedList *list){
 }
 
 /*Traverse Backward*/
+
 void traversebackward(struct ResolvedList *list){
+
     if (list->tail == NULL){
+
         printf("\nCase list is empty!\n");
         return;
     }
@@ -60,7 +73,9 @@ void traversebackward(struct ResolvedList *list){
 }
 
 /*Check duplicates*/
+
 bool isduplicate(struct ResolvedList *list, int CaseID, int ItemID){
+
     if (list->head == NULL){
         return false;
     }
@@ -112,12 +127,16 @@ void displaycase(struct ResolvedNode *temp){
         return;
     }
     printf("\n---Case Details---\n\n");
+
     printf("Case ID: %d\n", temp->CaseID);
+
     printf("Item ID: %d\n", temp->ItemID);
-    printf("Item: %s\n", temp->ItemName);
-    printf("Owner: %s\n", temp->OwnerName);
-    printf("Returned Date: %s\n", temp->ReturnedDate);
-    printf("Verified By: %s\n", temp->VerifiedBy);
+
+     printf("Item: %s\n", temp->ItemName);
+     printf("Owner: %s\n", temp->OwnerName);
+   
+       printf("Returned Date: %s\n", temp->ReturnedDate);
+     printf("Verified By: %s\n", temp->VerifiedBy);
     printf("Remarks: %s\n", temp->Remarks);
 }
 
@@ -200,6 +219,7 @@ void displayResolvedCasesMenu(struct ResolvedList *list){
 
     do {
         printf("\n===== RESOLVED CASE MANAGEMENT =====\n\n");
+
         printf("1. Display All Cases (Forward)\n");
         printf("2. Display All Cases (Backward)\n");
         printf("3. Add Case\n");
@@ -210,6 +230,7 @@ void displayResolvedCasesMenu(struct ResolvedList *list){
         printf("8. Update Remarks\n");
         printf("9. Delete Case\n");
         printf("0. Back to Main Menu\n");
+        
         printf("Please enter your choice number: ");
         scanf("%d", &choice);
 

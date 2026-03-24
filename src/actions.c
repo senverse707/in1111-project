@@ -9,8 +9,10 @@ ActionNode *stackTop = NULL;
 int stackSize = 0;
 int actionCounter = 1;
 
-/* ── helpers ─────────────────────────────── */
+/* helpers */
+
 void clearBuffer(void)
+
 {
     int c;
     while ((c = getchar()) != '\n' && c != EOF)
@@ -21,6 +23,7 @@ void printLine(int n)
 {
     for (int i = 0; i < n; i++)
         putchar('-');
+
     putchar('\n');
 }
 
@@ -31,7 +34,9 @@ void getCurrentTime(char *buf)
     strftime(buf, 20, "%Y-%m-%d %H:%M", tm);
 }
 
-/* ── stack operations ────────────────────── */
+
+
+/*  stack operations */
 
 void pushAction(const char *desc, const char *type)
 {
@@ -42,18 +47,26 @@ void pushAction(const char *desc, const char *type)
         return;
     }
     n->actionID = actionCounter++;
+
     strncpy(n->actionDescription, desc, 99);
     n->actionDescription[99] = '\0';
+
+
     strncpy(n->actionType, type, 19);
     n->actionType[19] = '\0';
+
+
     getCurrentTime(n->timestamp);
     n->next = stackTop;
     stackTop = n;
     stackSize++;
+
+
     printf("  [OK] Action pushed. Stack size: %d\n", stackSize);
 }
 
 void popAction(void)
+
 {
     if (!stackTop)
     {
@@ -61,14 +74,18 @@ void popAction(void)
         return;
     }
     printf("\n  [UNDO] Action removed:\n");
+
+
     printf("  ID    : %d\n", stackTop->actionID);
     printf("  Type  : %s\n", stackTop->actionType);
     printf("  Desc  : %s\n", stackTop->actionDescription);
     printf("  Time  : %s\n", stackTop->timestamp);
+
     ActionNode *tmp = stackTop;
     stackTop = stackTop->next;
     free(tmp);
     stackSize--;
+
     printf("  Stack size now: %d\n", stackSize);
 }
 
@@ -79,6 +96,7 @@ void peekAction(void)
         printf("  [Stack] Stack is empty.\n");
         return;
     }
+
     printf("\n  [Most Recent Action]\n");
     printf("  ID    : %d\n", stackTop->actionID);
     printf("  Type  : %s\n", stackTop->actionType);
@@ -93,7 +111,9 @@ void displayActionHistory(void)
         printf("  [Stack] No action history.\n");
         return;
     }
+
     printf("\n  %-4s  %-10s  %-22s  %s\n", "ID", "Type", "Timestamp", "Description");
+
     printLine(75);
     ActionNode *cur = stackTop;
     while (cur)
@@ -124,6 +144,7 @@ void countActionsByType(void)
             other++;
         cur = cur->next;
     }
+    
     printf("\n  Action Type Summary:\n");
     printf("  INSERT : %d\n", ins);
     printf("  DELETE : %d\n", del);
@@ -133,7 +154,7 @@ void countActionsByType(void)
     printf("  TOTAL  : %d\n", ins + del + upd + other);
 }
 
-/* ── manual push input ───────────────────── */
+/*manual push input*/
 void pushManual(void)
 {
     char desc[100], type[20];
@@ -146,7 +167,7 @@ void pushManual(void)
     pushAction(desc, type);
 }
 
-/* ── sample data ─────────────────────────── */
+/* sample data*/
 void loadSampleData(void)
 {
     pushAction("Lost item added: iPhone 13 (ID:1)", "INSERT");
@@ -164,39 +185,57 @@ void displayActionsMenu(){
         printf("\n");
         printLine(50);
         printf("  1. Push Action\n");
+
         printf("  2. Pop Action  (Undo)\n");
+
         printf("  3. Peek        (View top)\n");
+
         printf("  4. Display Full History\n");
+
         printf("  5. Count by Type\n");
+
         printf("  0. Exit\n");
+
         printLine(50);
+
         printf("  Choice: ");
         scanf("%d", &ch);
+
         clearBuffer();
+
         printf("\n");
+
         switch (ch)
         {
         case 1:
             pushManual();
             break;
+
         case 2:
             popAction();
             break;
+
         case 3:
             peekAction();
             break;
+
+
         case 4:
             displayActionHistory();
             break;
+
         case 5:
             countActionsByType();
             break;
+
         case 0:
             printf("  Goodbye!\n\n");
             break;
+
         default:
             printf("  [Error] Invalid option.\n");
         }
+
     } while (ch != 0);
 }
 

@@ -9,6 +9,7 @@
 #include "staff.h"
 
 int main() {
+    
     int choice;
     CSLL staffList;
     initialize(&staffList);
@@ -22,6 +23,7 @@ int main() {
         printf("\n=========================================\n");
         printf("  Lost and Found Management System\n");
         printf("=========================================\n");
+
         printf("  1. Actions\n");
         printf("  2. Categories\n");
         printf("  3. Claims\n");
@@ -30,26 +32,48 @@ int main() {
         printf("  6. Resolved Cases\n");
         printf("  7. Staff\n");
         printf("  0. Exit\n");
+
         printf("=========================================\n");
+
         printf("  Enter your choice: ");
+
         if (scanf("%d", &choice) != 1) {
             printf("\n  Invalid input. Please enter a number.\n");
             clearBuffer();
             choice = -1;
             continue;
         }
+
         clearBuffer();
 
         switch (choice) {
-            case 1: displayActionsMenu(); break;
-            case 2: displayCategoryMenu(); break;
-            case 3: displayClaimMenu(&claimQueue); break;
-            case 4: displayFoundItemMenu(); break;
-            case 5: displayLostItemMenu(); break;
-            case 6: displayResolvedCasesMenu(&resolvedList); break;
-            case 7: displayStaffMenu(&staffList); break;
-            case 0: printf("\nGoodbye!\n"); break;
-            default: printf("\nInvalid choice. Try again.\n"); break;
+            case 1:
+             displayActionsMenu();
+              break;
+            case 2: 
+            displayCategoryMenu();
+             break;
+            case 3:
+             displayClaimMenu(&claimQueue);
+              break;
+            case 4:
+             displayFoundItemMenu(); 
+             break;
+            case 5: 
+            displayLostItemMenu();
+             break;
+            case 6: 
+            displayResolvedCasesMenu(&resolvedList);
+             break;
+            case 7:
+             displayStaffMenu(&staffList); 
+             break;
+            case 0:
+             printf("\nGoodbye!\n");
+              break;
+            default:
+             printf("\nInvalid choice. Try again.\n");
+              break;
         }
     } while (choice != 0);
 
@@ -67,6 +91,7 @@ int main() {
     }
 
     /* Free found items linked list */
+
     {
         FoundItemNode *cur = foundHead;
         while (cur) {
@@ -88,7 +113,9 @@ int main() {
     }
 
     /* Free resolved cases circular doubly linked list */
+
     if (resolvedList.head != NULL) {
+
         struct ResolvedNode *cur = resolvedList.head->next;
         while (cur != resolvedList.head) {
             struct ResolvedNode *tmp = cur;

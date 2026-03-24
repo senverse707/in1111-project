@@ -177,10 +177,12 @@ void rotateToNext(CSLL *list)
 
     list->head = list->head->next;
     char logMsg[100];
+
     snprintf(logMsg, sizeof(logMsg), "Duty rotated to: %s (ID:%d)", list->head->data.name, list->head->data.id);
+    
     pushAction(logMsg, "UPDATE");
-    printf("  [INFO] Rotated. Current on duty: %s (ID: %d, Shift: %s)\n",
-           list->head->data.name, list->head->data.id, list->head->data.shift);
+    
+    printf("  [INFO] Rotated. Current on duty: %s (ID: %d, Shift: %s)\n", list->head->data.name, list->head->data.id, list->head->data.shift);
 }
 
 void displayCurrentDuty(CSLL *list)
@@ -227,6 +229,7 @@ void displayAllStaff(CSLL *list)
 }
 
 void freeCircularList(CSLL *list)
+
 {
     if (list->head == NULL)
         return;
@@ -250,15 +253,20 @@ void displayStaffMenu(CSLL *list)
     {
         printf("\n");
         printf("  ========================================\n");
+
         printf("    STAFF DUTY ROTATION\n");
+
         printf("  ========================================\n");
+
         printf("    1. Add Staff Member\n");
         printf("    2. Remove Staff Member\n");
         printf("    3. Rotate to Next (Move Duty)\n");
         printf("    4. View Current On Duty\n");
         printf("    5. Display All Staff\n");
         printf("    0. Back to Main Menu\n");
+
         printf("  ========================================\n");
+
         printf("    Enter your choice: ");
 
         if (scanf("%d", &choice) != 1)

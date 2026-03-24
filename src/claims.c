@@ -90,6 +90,7 @@ void peek(Queue *q)
     }
 
     Claim c = q->front->data;
+
     printf("---- Front Claim ----\n");
     printf("Claim ID: %d\n", c.claim_id);
     printf("Name: %s\n", c.claimant_name);
@@ -172,16 +173,22 @@ void displayClaimMenu(Queue *q){
             enqueue(c, q);
             char logMsg[100];
             snprintf(logMsg, sizeof(logMsg), "Claim enqueued: %s for %s (ID:%d)", c.claimant_name, c.item_name, c.claim_id);
+            
             pushAction(logMsg, "INSERT");
+
             printf("Claim added successfully!\n");
             break;
         }
+
         case 2:
             peek(q);
+
             break;
+
         case 3:
             all(q);
             break;
+
         case 4:
         {
             Claim removed = dequeue(q);
@@ -193,6 +200,7 @@ void displayClaimMenu(Queue *q){
             }
             break;
         }
+
         case 5:
         {
             int id;

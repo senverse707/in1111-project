@@ -8,6 +8,8 @@
 struct LostItem *lostHead = NULL;
 
 void insertLostItem()
+
+
 {
     struct LostItem *newNode = (struct LostItem*)malloc(sizeof(struct LostItem));
 
@@ -60,6 +62,7 @@ void insertLostItem()
     }
 
     char logMsg[100];
+
     snprintf(logMsg, sizeof(logMsg), "Lost item added: %s (ID:%d)", newNode->name, newNode->id);
     pushAction(logMsg, "INSERT");
     printf("Lost item added successfully!\n");
@@ -76,11 +79,14 @@ void displayLostItems()
     }
 
     while(temp != NULL)
+
     {
         printf("\nID: %d", temp->id);
         printf("\nItem Name: %s", temp->name);
+
         printf("\nCategory: %s", temp->category);
         printf("\nColor: %s", temp->color);
+
         printf("\nLocation Lost: %s", temp->location);
         printf("\nDate Lost: %s", temp->date);
         printf("\nOwner: %s", temp->owner);
@@ -235,30 +241,64 @@ void displayLostItemMenu(){
     int choice;
     do {
         printf("\n===== Lost Item Management Menu =====\n");
-        printf("1. Insert Lost Item\n");
+
+        printf("1. Insert Lost Item \n");
+
         printf("2. Display Lost Items\n");
-        printf("3. Search Lost Item\n");
+
+        printf("3. Search Lost Item \n");
+
         printf("4. Delete Lost Item\n");
+
         printf("5. Update Lost Item\n");
-        printf("6. Sort Lost Items (by ID)\n");
+
+        printf("6. Sort Lost Items (by ID) \n");
+
         printf("0. Back to Main Menu\n");
+
         printf("Enter choice: ");
+
         if (scanf("%d", &choice) != 1) {
+
             printf("Invalid input. Please enter a number.\n");
+
             clearBuffer();
+
             choice = -1;
             continue;
         }
         clearBuffer();
         switch (choice) {
-            case 1: insertLostItem(); break;
-            case 2: displayLostItems(); break;
-            case 3: searchLostItem(); break;
-            case 4: deleteLostItem(); break;
-            case 5: updateLostItem(); break;
-            case 6: sortLostItems(); break;
-            case 0: break;
-            default: printf("Invalid choice\n");
+
+            case 1:
+            insertLostItem(); 
+            break;
+
+            case 2:
+             displayLostItems();
+              break;
+
+            case 3: 
+            searchLostItem();
+             break;
+
+            case 4:
+             deleteLostItem();
+              break;
+
+            case 5: 
+            updateLostItem();
+             break;
+
+            case 6: 
+            sortLostItems();
+             break;
+
+            case 0: 
+            break;
+
+            default:
+             printf("Invalid choice\n");
         }
     } while (choice != 0);
 }
